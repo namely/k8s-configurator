@@ -28,6 +28,13 @@ func main() {
 			Name:   "create",
 			Usage:  "creates a set of environment-specific ConfigMap files from a single yaml",
 			Action: createAction,
+			Flags: []cli.Flag{
+				cli.StringFlag{
+					Name:  "outdir, o",
+					Value: "out",
+					Usage: "output dir for config files",
+				},
+			},
 		},
 	}
 
@@ -55,7 +62,11 @@ func createAction(ctx *cli.Context) error {
 		if err != nil {
 			return err
 		}
-		if err := ioutil.WriteFile(fmt.Sprintf("%v.yaml", k), d, 0644); err != nil {
+		out := ctx.String("outdir")
+		if _, err := os.Stat(out); os.IsNotExist(err) {
+			os.Mkdir(out, 0744)
+		}
+		if err := ioutil.WriteFile(fmt.Sprintf("%v/%v.yaml", out, k), d, 0644); err != nil {
 			return err
 		}
 	}
