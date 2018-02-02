@@ -1,0 +1,10 @@
+name: foo
+namespace: system
+
+default:
+  setting1: value1
+  setting2: value2
+
+overrides:
+  int:
+    setting1: an-override
