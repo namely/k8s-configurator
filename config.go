@@ -1,9 +1,9 @@
 package configurator
 
 import (
-	"gopkg.in/yaml.v2"
+	"github.com/ghodss/yaml"
+	"k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	"k8s.io/kubernetes/pkg/apis/core"
 )
 
 // Config represents a default ConfigMap
@@ -27,15 +27,13 @@ func NewConfigFromYaml(in []byte) Config {
 
 // OutputAll returns a Default ConfigMap and
 // any merged overrides
-func (c Config) OutputAll() map[string]core.ConfigMap {
-	results := make(map[string]core.ConfigMap)
+func (c Config) OutputAll() map[string]v1.ConfigMap {
+	results := make(map[string]v1.ConfigMap)
 
-	base := core.ConfigMap{
+	base := v1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:              c.Name,
-			Namespace:         c.Namespace,
-			CreationTimestamp: metav1.Time{},
-			DeletionTimestamp: &metav1.Time{},
+			Name:      c.Name,
+			Namespace: c.Namespace,
 		},
 		TypeMeta: metav1.TypeMeta{
 			Kind:       "ConfigMap",
@@ -46,7 +44,7 @@ func (c Config) OutputAll() map[string]core.ConfigMap {
 	results["default"] = base
 
 	for override, merge := range c.Overrides {
-		o := core.ConfigMap{}
+		o := v1.ConfigMap{}
 		base.DeepCopyInto(&o)
 
 		for k, v := range merge {
