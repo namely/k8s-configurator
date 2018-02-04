@@ -3,3 +3,4 @@ vendor
 !vendor/vendor.json
 out
 dist/
+*.coverprofile
