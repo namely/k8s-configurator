@@ -1,0 +1,11 @@
+language: go
+
+go:
+  - 1.9
+
+install:
+  - make deps
+script:
+  - make coveralls
+notifications:
+  email: false
