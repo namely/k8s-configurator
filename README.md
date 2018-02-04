@@ -3,7 +3,7 @@
 Generate environment-specific ConfigMaps from a single source Yaml.
 
 [![Build Status](https://travis-ci.org/namely/k8s-configurator.svg?branch=master)](https://travis-ci.org/namely/k8s-configurator)
-[![Coverage Status](https://coveralls.io/repos/github/namely/k8s-configurator/badge.svg?branch=mlh%2Ftravis)](https://coveralls.io/github/namely/k8s-configurator?branch=mlh%2Ftravis)
+[![Coverage Status](https://coveralls.io/repos/github/namely/k8s-configurator/badge.svg?branch=master)](https://coveralls.io/github/namely/k8s-configurator?branch=master)
 
 ## Usage
 
