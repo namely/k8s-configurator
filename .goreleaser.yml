@@ -1,5 +1,5 @@
 builds:
-  - main: cmd/k8s-configurator/main.go
+  - main: ./cmd/k8s-configurator/main.go
     binary: k8s-configurator
     goos:
       - windows
