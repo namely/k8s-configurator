@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 
-	yaml "github.com/ghodss/yaml"
 	config "github.com/namely/k8s-configurator"
 	"github.com/urfave/cli"
 )
@@ -19,44 +18,31 @@ const (
 func main() {
 	app := cli.NewApp()
 	app.Name = "k8s-configurator"
-	app.Description = "generate a set of environment-specific ConfigMap files from a single yaml"
+	app.Description = "generate an environment-specific ConfigMap from a single source yaml"
 	app.Flags = []cli.Flag{}
 	app.Version = Version
+	app.UsageText = "generate input-file env"
 
 	app.Commands = []cli.Command{
 		{
-			Name:   "generate",
-			Usage:  "generates a set of environment-specific ConfigMap files from a single yaml",
-			Action: generateAction,
-			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "file, f",
-					Usage: "input yaml file containing config information",
-				},
-				cli.StringFlag{
-					Name:  "out, o",
-					Value: "stdout",
-					Usage: "output for generated files. defaults to stdout. if other than stdout a directory will be created.",
-				},
-				cli.StringFlag{
-					Name:  "env, e",
-					Value: "default",
-					Usage: "the environment to generate. use `all` to generate all environments (only allowed with an output directory).",
-				},
-			},
+			Name:      "generate",
+			Usage:     "generate an environment-specific ConfigMap from a single source yaml",
+			Action:    generateAction,
+			ArgsUsage: "input-file env",
+			UsageText: "generate input-file env",
 		},
 	}
 
 	if err := app.Run(os.Args); err != nil {
-		fmt.Println(err.Error())
+		fmt.Fprintf(os.Stderr, "%v\n", err.Error())
 		os.Exit(1)
 	}
 }
 
 func generateAction(ctx *cli.Context) error {
-	configFile := ctx.String("file")
+	configFile := ctx.Args().Get(0)
 	if configFile == "" {
-		return errors.New("missing parameter: file")
+		return errors.New("missing file parameter")
 	}
 
 	file, err := ioutil.ReadFile(configFile)
@@ -64,41 +50,11 @@ func generateAction(ctx *cli.Context) error {
 		return err
 	}
 
-	cfg := config.NewConfigFromYaml(file)
-
-	env := ctx.String("env")
-	out := ctx.String("out")
-	all := cfg.OutputAll()
-
-	if env == "all" {
-		if out == "stdout" {
-			return errors.New("cannot use stdout with all env output")
-		}
-		out := ctx.String("out")
-		if _, err := os.Stat(out); os.IsNotExist(err) {
-			os.Mkdir(out, 0744)
-		}
-
-		for k, v := range all {
-			d, err := yaml.Marshal(v)
-			if err != nil {
-				return err
-			}
-
-			if err := ioutil.WriteFile(fmt.Sprintf("%v/%v.yaml", out, k), d, 0644); err != nil {
-				return err
-			}
-		}
-	} else {
-		e, exists := all[env]
-		if !exists {
-			return fmt.Errorf("requested env %v does not exist in input yaml", env)
-		}
-		d, err := yaml.Marshal(e)
-		if err != nil {
-			return err
-		}
-		fmt.Printf("%s", d)
+	env := ctx.Args().Get(1)
+	if len(env) == 0 {
+		env = "default"
 	}
-	return nil
+
+	return config.Generate(file, env, os.Stdout)
+
 }
