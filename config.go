@@ -9,10 +9,10 @@ import (
 // Config represents a default ConfigMap
 // and any applicable overrides
 type Config struct {
-	Name      string
-	Namespace string
-	Default   map[string]string
-	Overrides map[string]map[string]string
+	Name      string                       `yaml:"name"`
+	Namespace string                       `yaml:"namespace"`
+	Default   map[string]string            `yaml:"default"`
+	Overrides map[string]map[string]string `yaml:"overrides"`
 }
 
 // NewConfigFromYaml reads yaml from a byte slice
