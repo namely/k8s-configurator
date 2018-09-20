@@ -7,10 +7,16 @@ Generate environment-specific ConfigMaps from a single source Yaml.
 
 ## How to install
 
-Homebrew:
+Pre-compiled binaries:
 
- - Setup [Namely's Homebrew tap](https://github.com/namely/homebrew-tap)
- - Install the pre-built binary `brew install k8s-configurator`
+1. On macOS via Homebrew:
+
+   - Setup [Namely's Homebrew tap](https://github.com/namely/homebrew-tap)
+   - Install the pre-built binary `brew install k8s-configurator`
+
+2. On Linux or Windows Subsystem for Linux:
+
+   - Run `curl -sL https://github.com/namely/k8s-configurator/releases/download/v0.0.3/k8s-configurator_0.0.3_linux_amd64.tar.gz | sudo tar -xzf - -C /usr/local/bin/`
 
 Compile from source:
 
