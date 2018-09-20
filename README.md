@@ -5,6 +5,18 @@ Generate environment-specific ConfigMaps from a single source Yaml.
 [![Build Status](https://travis-ci.org/namely/k8s-configurator.svg?branch=master)](https://travis-ci.org/namely/k8s-configurator)
 [![Coverage Status](https://coveralls.io/repos/github/namely/k8s-configurator/badge.svg?branch=master)](https://coveralls.io/github/namely/k8s-configurator?branch=master)
 
+## How to install
+
+Homebrew:
+
+ - Setup [Namely's Homebrew tap](https://github.com/namely/homebrew-tap)
+ - Install the pre-built binary `brew install k8s-configurator`
+
+Compile from source:
+
+ - Ensure that the `bin/` folder under the configured `$GOPATH` is on `$PATH`
+ - Run `go get -u github.com/namely/k8s-configurator/cmd/k8s-configurator`
+
 ## Usage
 
 ```
