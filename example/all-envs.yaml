@@ -1,5 +1,8 @@
 name: foo
 namespace: system
+annotations:
+    key1: value1
+    key2: value2
 
 default:
   setting1: value1

@@ -9,10 +9,11 @@ import (
 // Config represents a default ConfigMap
 // and any applicable overrides
 type Config struct {
-	Name      string                       `yaml:"name"`
-	Namespace string                       `yaml:"namespace"`
-	Default   map[string]string            `yaml:"default"`
-	Overrides map[string]map[string]string `yaml:"overrides"`
+	Name        string                       `yaml:"name"`
+	Namespace   string                       `yaml:"namespace"`
+	Default     map[string]string            `yaml:"default"`
+	Overrides   map[string]map[string]string `yaml:"overrides"`
+	Annotations map[string]string            `yaml:"annotations,omitempty"`
 }
 
 // NewConfigFromYaml reads yaml from a byte slice
@@ -32,8 +33,9 @@ func (c Config) OutputAll() map[string]v1.ConfigMap {
 
 	base := v1.ConfigMap{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      c.Name,
-			Namespace: c.Namespace,
+			Name:        c.Name,
+			Namespace:   c.Namespace,
+			Annotations: c.Annotations,
 		},
 		TypeMeta: metav1.TypeMeta{
 			Kind:       "ConfigMap",
