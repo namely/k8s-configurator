@@ -34,6 +34,8 @@ func TestOutputsADefaultConfigMap(t *testing.T) {
 	require.Equal(t, "system", result.Namespace, "namespace did not fatch")
 	require.Equal(t, "value1", result.Data["setting1"], "setting1 did not match")
 	require.Equal(t, "value2", result.Data["setting2"], "setting1 did not match")
+	require.Equal(t, "value1", result.Annotations["key1"], "annotation1 did not match")
+	require.Equal(t, "value2", result.Annotations["key2"], "annotation2 did not match")
 
 }
 

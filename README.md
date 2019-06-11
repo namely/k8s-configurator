@@ -49,6 +49,8 @@ Example yaml:
 ```
 name: foo
 namespace: system
+annotations:
+    strategy.spinnaker.io/versioned: false
 
 default:
   setting1: value1
