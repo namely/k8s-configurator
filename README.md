@@ -1,4 +1,7 @@
 # k8s-configurator
+ 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/62d5e8eec18a40ccb620d0c3948c02f4)](https://app.codacy.com/gh/namely/k8s-configurator/dashboard)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/62d5e8eec18a40ccb620d0c3948c02f4)](https://app.codacy.com/gh/namely/k8s-configurator/dashboard)
 
 Generate environment-specific ConfigMaps from a single source Yaml.
 
